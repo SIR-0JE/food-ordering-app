@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { connectDB } from "@/lib/mongoose";
 import Order from "@/models/order";
 
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -13,8 +13,18 @@ export async function PATCH(
     const body = await request.json();
 
     const update: Record<string, unknown> = {};
+
     if (typeof body.paymentConfirmed === "boolean") {
       update.paymentConfirmed = body.paymentConfirmed;
+    }
+
+    if (typeof body.notes === "string") {
+      const trimmedNotes = body.notes.trim();
+      if (trimmedNotes.length > 0) {
+        update.notes = trimmedNotes;
+      } else {
+        update.notes = "";
+      }
     }
 
     if (!Object.keys(update).length) {

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 type OrderRecord = {
@@ -160,11 +161,16 @@ export default function AdminDashboard() {
                     {order.receiptUrl && (
                       <div className="flex flex-col gap-2">
                         <p className="text-xs uppercase tracking-wide text-slate-400">Receipt</p>
-                        <img
-                          src={order.receiptUrl}
-                          alt="Payment receipt"
-                          className="h-48 w-full rounded-2xl border border-white/10 object-cover"
-                        />
+                        <div className="relative h-48 w-full overflow-hidden rounded-2xl border border-white/10">
+                          <Image
+                            src={order.receiptUrl}
+                            alt="Payment receipt"
+                            fill
+                            className="object-cover"
+                            sizes="100vw"
+                            unoptimized
+                          />
+                        </div>
                       </div>
                     )}
                     {order.notes && (

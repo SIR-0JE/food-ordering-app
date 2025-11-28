@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 const EXTRA_FEE = 100;
@@ -109,7 +110,7 @@ export default function Home() {
         notes: notes.trim() || undefined,
       };
 
-      const response = await fetch("/api/order", {
+      const response = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -240,11 +241,16 @@ export default function Home() {
                 {receiptPreview && (
                   <div className="rounded-2xl border border-slate-200 bg-white p-3">
                     <p className="text-xs font-semibold text-slate-500">Preview</p>
-                    <img
-                      src={receiptPreview}
-                      alt="Receipt preview"
-                      className="mt-2 h-40 w-full rounded-xl object-cover"
-                    />
+                    <div className="relative mt-2 h-40 w-full overflow-hidden rounded-xl">
+                      <Image
+                        src={receiptPreview}
+                        alt="Receipt preview"
+                        fill
+                        className="object-cover"
+                        sizes="100vw"
+                        unoptimized
+                      />
+                    </div>
                   </div>
                 )}
               </label>
