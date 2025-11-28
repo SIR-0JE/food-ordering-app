@@ -3,11 +3,10 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import Order from "@/models/order";
 
-type Params = {
-  params: { id: string };
-};
-
-export async function PATCH(request: Request, { params }: Params) {
+export async function PATCH(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     await connectDB();
     const { id } = params;
